@@ -12,41 +12,28 @@ public class A {
         InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(path));
 
         try (BufferedReader reader = new BufferedReader(inputStreamReader)) {
-            int a = Integer.parseInt(reader.readLine());
+            int base = Integer.parseInt(reader.readLine());
             int mod = Integer.parseInt(reader.readLine());
-            var string = reader.readLine().toCharArray();
+            var string = reader.readLine();
 
-            System.out.println(solution(a, mod, string));
+            System.out.println(solution(base, mod, string));
 
         }
     }
 
-    private static int solution(int a, int mod, char [] chars) {
-        var n = chars.length;
+    private static long solution(int base, int mod, String string) {
+        var n = string.length();
         if (n == 0) {
             return 0;
         }
         if (n == 1) {
-            return (int) chars[0] % mod;
+            return (int) string.charAt(0) % mod;
         }
 
-//        int result = 0;
-//        for (Character ch : chars) {
-//            result = (result + ((int) ((int) ch * Math.pow(a, n-1))))%mod;
-//            n--;
-//        }
-        int result = (chars[0] * a + chars[1]) % mod;
-        for (int i = 2; i < n; i++) {
-            result = ((result * a) + chars[i]) % mod;
+        long hash = 0;
+        for (int i = 0; i < string.length(); i++) {
+            hash = (hash * base + string.charAt(i)) % mod;
         }
-
-//        int result = 0;
-//        for (int i = 0; i < chars.length; i++) {
-//            result = ((int)(result + (((int)(chars[i]))
-//                    * Math.pow(a, chars.length - i - 1)))) % mod;
-//
-//        }
-
-        return result%mod;
+        return hash;
     }
 }
